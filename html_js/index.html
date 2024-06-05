@@ -1,0 +1,84 @@
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário com Campos Numéricos</title>
+    <style>
+        /* Estilo para remover as setas dos campos numéricos */
+        input[type=number]::-webkit-outer-spin-button,
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        /* Estilo para mensagens */
+        .mensagem {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .mensagem.positiva {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .mensagem.negativa {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+    <script>
+        function validarFormulario(event) {
+            // Obtém os valores dos campos numéricos
+            const numero1 = document.getElementById('numero1').value;
+            const numero2 = document.getElementById('numero2').value;
+            const mensagemPositiva = document.getElementById('mensagemPositiva');
+            const mensagemNegativa = document.getElementById('mensagemNegativa');
+
+            // Verifica se o número B é maior que o número A
+            if (parseFloat(numero2) <= parseFloat(numero1)) {
+                mensagemNegativa.style.display = 'block';
+                mensagemPositiva.style.display = 'none';
+                event.preventDefault(); // Impede o envio do formulário
+            } else {
+                mensagemPositiva.style.display = 'block';
+                mensagemNegativa.style.display = 'none';
+                // Para simulação de mensagem positiva e evitar envio real do formulário
+                event.preventDefault(); // Remover esta linha para permitir envio real
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Adiciona o evento de validação ao formulário
+            const form = document.querySelector('form');
+            form.addEventListener('submit', validarFormulario);
+        });
+    </script>
+</head>
+<body>
+    <h2>Formulário com Campos Numéricos</h2>
+    <form action="submit_form.html" method="post">
+        <label for="numero1">Número 1:</label>
+        <input type="number" id="numero1" name="numero1" required>
+        <br><br>
+        <label for="numero2">Número 2:</label>
+        <input type="number" id="numero2" name="numero2" required>
+        <br><br>
+        <button type="submit">Submeter</button>
+    </form>
+    <div id="mensagemPositiva" class="mensagem positiva">
+        Formulário válido! Número 2 é maior que o Número 1.
+    </div>
+    <div id="mensagemNegativa" class="mensagem negativa">
+        O número 2 deve ser maior que o número 1.
+    </div>
+</body>
+</html>
